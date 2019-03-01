@@ -96,8 +96,10 @@ class Goods extends BaseAdmin{
             $data['g_image']=uploads('g_image');
 
             $data['g_images']='/thumb/'.uniqid('',true).'.jpg';
+            $data['g_thumb']='/thumb/'.md5(time()).'.jpg';
             $image = \think\Image::open(request()->file('g_image'));
             $image->thumb(167,78,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_images']);
+            $image->thumb(140,140,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_thumb']);
         }
        
         if(input('g_status')){
@@ -265,8 +267,10 @@ class Goods extends BaseAdmin{
                 $data['g_image']=uploads('g_image');
                
                 $data['g_images']='/thumb/'.uniqid('',true).'.jpg';
+                $data['g_thumb']='/thumb/'.md5(time()).'.jpg';
                 $image = \think\Image::open(request()->file('g_image'));
                 $image->thumb(167,78,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_images']);
+                $image->thumb(140,140,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_thumb']);
             }else{
                 $data['g_image']=$re['g_image'];
             }

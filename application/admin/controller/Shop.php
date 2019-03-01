@@ -30,10 +30,9 @@ class Shop extends BaseAdmin
         $data=input('post.');
         if(!is_string(input('logo'))){
             $data['logo']=uploads('logo');
-
-            // $data['g_images']='/uploads/thumb/'.uniqid('',true).'.jpg';
-            // $image = \think\Image::open(request()->file('g_image'));
-            // $image->thumb(104,104,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_images']);
+        }
+        if(!is_string(input('image'))){
+            $data['image']=uploads('image');
         }
        
         if(input('status')){
@@ -65,12 +64,13 @@ class Shop extends BaseAdmin
         $data=input('post.');
         if(!is_string(input('logo'))){
             $data['logo']=uploads('logo');
-
-            // $data['g_images']='/uploads/thumb/'.uniqid('',true).'.jpg';
-            // $image = \think\Image::open(request()->file('g_image'));
-            // $image->thumb(104,104,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_images']);
         }else{
             $data['logo']=$re['logo'];
+        }
+        if(!is_string(input('image'))){
+            $data['image']=uploads('image');
+        }else{
+            $data['image']=$re['image'];
         }
        
         if(input('status')){

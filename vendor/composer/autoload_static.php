@@ -25,6 +25,10 @@ class ComposerStaticInit2bc4f313dba415539e266f7ac2c87dcd
             'think\\captcha\\' => 14,
             'think\\' => 6,
         ),
+        'm' => 
+        array (
+            'mumbaicat\\makeapidoc\\' => 21,
+        ),
         'a' => 
         array (
             'app\\' => 4,
@@ -73,6 +77,10 @@ class ComposerStaticInit2bc4f313dba415539e266f7ac2c87dcd
             0 => __DIR__ . '/../..' . '/thinkphp/library/think',
             1 => __DIR__ . '/..' . '/topthink/think-image/src',
             2 => __DIR__ . '/..' . '/topthink/think-queue/src',
+        ),
+        'mumbaicat\\makeapidoc\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mumbaicat/makeapidoc/src',
         ),
         'app\\' => 
         array (
