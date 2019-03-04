@@ -22,140 +22,119 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="{:url('Index/index')}">首页</a>
           </li>
-          <li class="active">店铺列表</li>
-        </ul>
+          <li class="active">热门推荐</li>
+        </ul><!-- /.breadcrumb -->
 
       </div>
 
       <div class="page-content">
+
         {include file="public:set"}
+
         <div class="row">
           <div class="col-xs-12">
             <div class="col-sm-10 col-sm-offset-1">
               <div class="page-header">
-                <div class="row">
-                <div class="col-sm-4">
-                <a class="btn btn-success btn-white btn-bold" href="{:url('Shop/add')}">
+                <button class="btn btn-success btn-white btn-bold" data-toggle="modal" data-target="#add">
                   <i class="ace-icon fa fa-plus icon-only"></i>
-                  添加</a>
-                <!-- <button id="change" class="btn btn-warning btn-white btn-bold">
-                  <i class="fa fa-exchange"></i>
-                  排序
-                </button> 
-                <button class="btn btn-danger btn-white btn-bold del-btn">
+                  添加</button>
+                <!-- <button class="btn btn-danger btn-white btn-bold del-btn">
                   <i class="ace-icon fa fa-trash-o icon-only"></i>
-                  删除
-                </button>-->
-                </div>
-
-                <!-- <div class="col-sm-8 clearfix">
-                  <form class="form-inline pull-right" action="">
-                    <div class="form-group">
-                      <div class="input-group">
-									<span class="input-group-addon">
-											<i class="fa fa-th-list"></i>
-										</span>
-                        <select class="form-control" name="" id="">
-                          <option selected value="">分类</option>
-                          <option value="">asdasd</option>
-                          <option value="">asdasd</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-									<span class="input-group-addon">
-											<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-										</span>
-                        <input type="text" class="form-control" value="" placeholder="点击选择日期范围" name="date-range-picker"
-                               id="id-date-range-picker-1">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-									<span class="input-group-addon">
-										<i class="ace-icon fa fa-check"></i>
-									</span>
-                        <input type="text" name="key" id="key" class="form-control search-query" value="" placeholder="请输入需查询的关键字">
-                        <span class="input-group-btn">
-										<button type="submit" class="btn btn-info btn-sm ajax-search-form">
-											<span class="ace-icon fa fa-search icon-on-right bigger-120"></span> 搜索
-									</button>
-									</span>
-                      </div>
-                    </div>
-                  </form>
-                </div> -->
-                </div>
+                  删除</button> -->
               </div>
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                 
+                  <!-- <th class="center">
+                    <label class="pos-rel">
+                      <input type="checkbox" class="ace checkAll">
+                      <span class="lbl"></span>
+                    </label>
+                  </th> -->
                   <th>ID</th>
-                  <th>店铺名称</th>
-                  <th>店铺logo</th>
-                  <th>店铺状态</th>
-                  <th>添加时间</th>
-                
-                  <th style="border-right:#ddd solid 1px;width:7%;" >操作</th>
+                  <th>名称</th>
+                  <th>状态</th>
+                  <th style="border-right:#ddd solid 1px;">操作</th>
                 </tr>
                 </thead>
-                <!-- <form id="sortForm" action="{:url('Goods/sort')}" method="post">  -->
                 <tbody>
                 {volist name="list" id="v"}
-                <tr class="ace-thumbnails">
-                 
+                <tr>
+                  <!-- <td class="center"><label class="pos-rel">
+                    <input type="checkbox" class="ace check">
+                    <span class="lbl"></span>
+                  </label>
+                  </td> -->
+                  
                   <td><span class="badge badge-grey">{$v.id}</span></td>
                   <td>{$v.name}</td>
-                 
-                  <td class="ace-thumbnails hidden-480">
-                    <li><a href="{$v.logo}" data-rel="colorbox">
-                      <img width="80" height="80" alt="150x150" src="{$v.logo}"/>
-                      <div class="text">
-                        <div class="inner">点击放大</div>
-                      </div>
-                    </a></li>
-                  </td>
-                 
                   <td>
                     <label>
-                      <input id="status" name="status" onclick="changes({$v.id})" class="ace ace-switch ace-switch-6" type="checkbox" {if condition="$v.status eq 1"}checked{/if} />
+                      <input class="ace ace-switch ace-switch-6" onclick="change({$v.id})" type="checkbox" {if condition="$v.status eq 1" }checked{/if} />
                       <span class="lbl"></span>
                     </label>
                   </td>
-                  <td>{$v.addtime}</td>
-                  
                   <td>
-                    <a class="btn btn-xs btn-info" href="{:url('Shop/modifys',array('id'=>$v['id']))}">
+                    <button class="btn btn-xs btn-info" onclick="ajaxQuery('modify',{$v.id},readData)">
                       <i class="ace-icon fa fa-pencil bigger-120"></i>
-                    </a>
+                    </button>
                     <button class="btn btn-xs btn-danger" type="button" onclick="dels({$v.id})">
                       <i class="ace-icon fa fa-trash-o bigger-120"></i>
                     </button>
                   </td>
                 </tr>
                 {/volist}
-                {empty name="list"}<tr><td colspan="18" class="text-center">暂无数据</td></tr>{/empty}
                 </tbody>
-                <!-- </form> -->
               </table>
               <div class="text-center">
-                {$page}
+                <ul class="pagination">
+                  {$page}
+                </ul>
               </div>
             </div>
+            <!-- PAGE CONTENT BEGINS -->
+
+            <!-- PAGE CONTENT ENDS -->
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.page-content -->
     </div>
   </div><!-- /.main-content -->
+  <!-- Modal -->
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">添加</h4>
+        </div>
+        <div class="modal-body">
+          <form id="modal-form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label no-padding-right" for="">名称</label>
+              <div class="col-sm-8">
+                <input id="name" class="form-control" type="text" name="name" required>
+              </div>
+              <input type="hidden" name="id" id="id" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button id="save-btn" type="button" class="btn btn-primary">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
- {include file="public:header"}
+  {include file="public:footer"}
 
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
   <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>
 </div><!-- /.main-container -->
+
+
 
 <script>
   jQuery(function($) {
@@ -170,99 +149,62 @@
 
   })
 </script>
+
 <script type="text/javascript">
-		function dels(id){
-			layer.confirm('你确定删除吗？', {icon: 3}, function(index){
-		    layer.close(index);
-		    window.location.href="__URL__/delete/id/"+id;
-		  });
-	    }
-		</script>
-<script>
-function changes(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changes",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-function changeu(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changeu",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-function changea(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changea",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-function changel(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changel",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-function changess(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changess",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-function changeh(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changeh",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-function changek(id){
-	$.ajax({
-		type:"post",
-		url:"__URL__/changek",
-	    data:{id:id},
-	    datatype:"text",
-	    success:function(){
-	    	
-	    }
-	})
-}
-</script>
-
-
+  function dels(id){
+    layer.confirm('你确定删除吗？', {icon: 3}, function(index){
+      layer.close(index);
+      window.location.href="__URL__/delete/id/"+id;
+    });
+    }
+  </script>
   <script>
-  $("#change").click(function(){
-  	$("#sortForm").submit();
-  })
+    $(function () {
+      //添加-模态框
+      $("#save-btn").on(ace.click_event,function () {
+        //获取form表单,执行ajaxSubmit提交
+        var name = $("#name").val();
+    	  if($.trim(name) == ''){
+        	  layer.alert("请输入广告位名称！",{icon:5});
+        	  return false;
+          }
+    	var id = $("#id").val();
+        $("#add").ajaxSubmit({
+          url: '__URL__/saves',
+          type: 'post',
+          data:{name:name,id:id},
+          datatype:"text",
+          success: function(res){
+            //后台返回状态,保存成功
+            if(res.code == 1){
+              success(res.msg);
+              location.href=res.url;
+            }else{
+              error(res.msg);
+              location.href=res.url;
+            }
+          }
+        })
+      })
+    });
+
+    //向模态框写入数据
+    function readData(data) {
+    	$(".modal-title").text('修改');
+      $("#id").val(data.pl_id);
+      $("#name").val(data.pl_name);    
+      $('#add').modal('show');
+    }
+
+    function gs() {
+      console.log(1)
+    }
+  //bs模态框关闭事件回调函数
+    $('#add').on('hidden.bs.modal', function (e) {
+  // do something...
+  $('#modal-form').get(0).reset();
+  $(".modal-title").text('添加');
+	})
 
   </script>
 </body>

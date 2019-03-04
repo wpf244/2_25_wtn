@@ -9,7 +9,7 @@ class Shop extends BaseApi
         if($shopid == 0){
             $re=db("sys")->field("name,pclogo as logo,waplogo as image,follow")->where("id",1)->find();
         }else{
-            $re=db("shop")->field("name,logo,image,follow")->where("id",1)->find();
+            $re=db("shop")->field("name,logo,image,follow")->where("id",$shopid)->find();
         }
         $url=parent::getUrl();
         $re['logo']=$url.$re['logo'];

@@ -105,6 +105,15 @@ $(function(){
 
           <b class="arrow"></b>
         </li>
+
+        {if condition="ACTION_NAME eq 'lister'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Shop/lister')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            热门推荐
+          </a>
+
+          <b class="arrow"></b>
+        </li>
         
       
 

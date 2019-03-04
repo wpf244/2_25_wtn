@@ -2,7 +2,7 @@
 namespace app\api\controller;
 
 use think\Controller;
-
+use think\Request;
 
 class Login extends Controller
 {
@@ -73,5 +73,17 @@ class Login extends Controller
             }
         }
         echo \json_encode($arr);
+    }
+    public function logo()
+    {
+        $re=db("sys")->field("pclogo")->where("id",1)->find();
+        $url=Request::instance()->domain();
+        $re['pclogo']=$url.$re['pclogo'];
+        $arrs=[
+            'error_code'=>0,
+            'msg'=>"获取成功",
+            'data'=>$re
+        ];
+        echo \json_encode($arrs);
     }
 }

@@ -49,7 +49,7 @@ class Index extends BaseApi
         $banner['image']=$url.$banner['image'];
 
         //商品
-        $goods=db("goods")->field("gid,g_thumb")->where(["g_up"=>1,"g_status"=>1,"g_audi"=>1])->order(["g_sort asc","gid desc"])->select();
+        $goods=db("goods")->field("gid,g_thumb,g_xprice,g_name")->where(["g_up"=>1,"g_status"=>1,"g_audi"=>1])->order(["g_sort asc","gid desc"])->select();
         foreach($goods as $kk => $vv){
             $goods[$kk]['g_thumb']=$url.$vv['g_thumb'];
         }

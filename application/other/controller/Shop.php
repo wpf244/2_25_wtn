@@ -5,24 +5,36 @@ class Shop extends BaseAdmin
 {
     public function lister()
     {
-        $list=db("shop")->order("id desc")->paginate(10);
+        $shopid=session("uid");
+        $list=db("hot")->where("shopid",$shopid)->order("id desc")->paginate(10);
         $page=$list->render();
         $this->assign("list",$list);
         $this->assign("page",$page);
         return $this->fetch();
     }
-    public function add()
-    {
-        return $this->fetch();
-    }
-    public function check_username()
-    {
-        $username=input("username");
-        $re=db("shop")->where("username",$username)->find();
-        if($re){
-            echo '0';
+    public function saves(){
+        if($this->request->isAjax()){
+            $id=input("id");
+            if($id){
+                $data['name']=input('name');
+                $res=db("hot")->where("id",$id)->update($data);
+                if($res){
+                    $this->success("修改成功！",url('lister'));
+                }else{
+                    $this->error("修改失败！",url('lister'));
+                }
+            }else{
+                $data['name']=input('name');
+                $re=db("hot")->insert($data);
+                if($re){
+                    $this->success("添加成功！",url('lister'));
+                }else{
+                    $this->error("添加失败！",url('lister'));
+                } 
+            }
+            
         }else{
-            echo '1';
+            $this->success("非法提交",url('lister'));
         }
     }
     public function save()
