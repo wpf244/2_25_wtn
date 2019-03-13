@@ -1,14 +1,5 @@
 <?php
-/**
- * BaseAdmin.php
- * 朵朵科技
- * 官方网址 www.dd371.com
- * ===============================
- * @uses ECHO
- * @date 2018.11.29
- * @version 1.0
- *
- * **/
+
 namespace app\admin\controller;
 
 use think\Controller;
@@ -34,18 +25,18 @@ class BaseAdmin extends Controller{
 
         $level=$admin['level'];
         if($level == 0){
-            $controls=db("carte")->where("pid=0")->order("c_sort asc")->select();
+            $controls=db("carte")->where("pid=0")->order(["c_sort asc","cid asc"])->select();
             foreach($controls as $ks=> $vs){
-                $controls[$ks]['ways']=db("carte")->where("pid={$vs['cid']}")->order("c_sort asc")->select();
+                $controls[$ks]['ways']=db("carte")->where("pid={$vs['cid']}")->order(["c_sort asc","cid asc"])->select();
             }
             $this->assign("controls",$controls);
         }else{
             $controls_arr=explode(",",$admin['control']);
             $way_arr=explode(",",$admin['way']);
 
-            $controls=db("carte")->where(array("cid"=>array("in",$controls_arr)))->order("c_sort asc")->select();
+            $controls=db("carte")->where(array("cid"=>array("in",$controls_arr)))->order(["c_sort asc","cid asc"])->select();
             foreach($controls as $ks => $vs){
-                $controls[$ks]['ways']=db("carte")->where(array("cid"=>array("in",$way_arr)))->where("pid={$vs['cid']}")->order("c_sort asc")->select();
+                $controls[$ks]['ways']=db("carte")->where(array("cid"=>array("in",$way_arr)))->where("pid={$vs['cid']}")->order(["c_sort asc","cid asc"])->select();
             }
             $this->assign("controls",$controls);
         }

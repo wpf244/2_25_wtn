@@ -35,9 +35,9 @@
               <div class="page-header">
                 <div class="row">
                 <div class="col-sm-4">
-                <a class="btn btn-success btn-white btn-bold" href="{:url('Member/add')}">
+                <!-- <a class="btn btn-success btn-white btn-bold" href="{:url('Member/add')}">
                   <i class="ace-icon fa fa-plus icon-only"></i>
-                  添加</a>
+                  添加</a> -->
                 </div>
                 </div>
               </div>
@@ -48,9 +48,8 @@
                   <th class="hidden-480">会员名</th>
                   <th class="hidden-480">手机号码</th>
                   <th class="hidden-480">头像</th>
-                  <th class="hidden-480">股数</th>
-                  <th class="hidden-480">奖励金</th>
-                  <th class="hidden-480">等级</th>
+                  
+                  <th class="hidden-480">积分</th>
                   <th class="hidden-480">上级会员</th>
                   <th class="hidden-480">注册时间</th>
                   <th style="border-right:#ddd solid 1px;">操作</th>
@@ -71,24 +70,17 @@
                       </div>
                     </a></li>
                   </td>
-                  <td>{$v.money|intval}<i class="ace-icon fa fa-pencil bigger-120" onclick="change_money({$v.uid})"></i></td>
-                  <td class="hidden-480">{$v.bonus|intval}<i class="ace-icon fa fa-pencil bigger-120" onclick="change_bonus({$v.uid})"></i></td>
-                  <td class="hidden-480">
-                      <i class="ace-icon fa fa-chevron-circle-down bigger-120" onclick="level_change('down', {$v.uid})"></i>
-                      <span id="level{$v.uid}">
-                          {if condition="$v.level == 1"}一级合伙人{elseif condition="$v.level == 2"}二级合伙人{else /}普通会员{/if}
-                      </span>
-                      <i class="ace-icon fa fa-chevron-circle-up bigger-120" onclick="level_change('up', {$v.uid})"></i>
-                  </td>
+                  <td>{$v.integ}</td>
+                
                   <td class="hidden-480">{$v.pid_user}</td>
                   <td class="hidden-480">{$v.time|date="Y-m-d H:i:s",###}</td>
                   <td>
-                      <a class="btn btn-xs btn-info" href="{:url('Member/money_log',array('id'=>$v['uid']))}" title="股权日志">
+                      <!-- <a class="btn btn-xs btn-info" href="{:url('Member/money_log',array('id'=>$v['uid']))}" title="股权日志">
                         股权日志
                       </a>
                       <a class="btn btn-xs btn-info" href="{:url('Member/bonus_log',array('id'=>$v['uid']))}" title="奖励金日志">
                         奖励金日志
-                      </a>
+                      </a> -->
                     <!-- <a class="btn btn-xs btn-info" href="{:url('Member/modifys',array('id'=>$v['uid']))}" title="修改">
                       <i class="ace-icon fa fa-pencil bigger-120"></i>
                     </a>-->

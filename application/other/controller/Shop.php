@@ -24,6 +24,7 @@ class Shop extends BaseAdmin
                     $this->error("修改失败！",url('lister'));
                 }
             }else{
+                $data['shopid']=session("uid");
                 $data['name']=input('name');
                 $re=db("hot")->insert($data);
                 if($re){
@@ -106,13 +107,10 @@ class Shop extends BaseAdmin
     public function delete()
     {
         $id=input("id");
-        $re=db("shop")->where("id",$id)->find();
+        $re=db("hot")->where("id",$id)->find();
         if($re){
-            $del=db("shop")->where("id",$id)->delete();
-            $res=db("goods")->where("shopid",$id)->select();
-            if($res){
-                db("goods")->where("shopid",$id)->delete();
-            }
+            $del=db("hot")->where("id",$id)->delete();
+            
 
         }
         $this->redirect("lister");
@@ -137,5 +135,23 @@ class Shop extends BaseAdmin
             }
 
         }
+    }
+    public function change()
+    {
+        $id=input("id");
+        $re=db("hot")->where("id",$id)->find();
+        if($re){
+            if($re['status'] == 0){
+                db("hot")->where("id",$id)->setField("status",1);
+            }else{
+                db("hot")->where("id",$id)->setField("status",0);
+            }
+        }
+    }
+    public function modify()
+    {
+        $id=input("id");
+        $re=db("hot")->where("id",$id)->find();
+        echo json_encode($re);
     }
 }

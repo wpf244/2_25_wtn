@@ -87,6 +87,85 @@ $(function(){
 
     </li>
 
+    {if condition="CONTROLLER_NAME eq 'Dd'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-paper-plane"></i>
+        <span class="menu-text"> 订单管理 </span>
+
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+
+      <ul class="submenu">
+        {if condition="ACTION_NAME eq 'dai_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/dai_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            待付款订单
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+     {if condition="ACTION_NAME eq 'fa_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/fa_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            待发货订单
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'shou_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/shou_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            待收货订单
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'ping_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/ping_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            待评价订单
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'wan_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/wan_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            已完成订单
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'tui_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/tui_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            申请退货列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+
+        {if condition="ACTION_NAME eq 'ytui_dd'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Dd/ytui_dd')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            已退货列表
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+     
+      </ul>
+
+    </li>
+
+    
+
     
     {if condition="CONTROLLER_NAME eq 'Shop'"}<li class="open">{else /}<li class="">{/if}
       <a href="#" class="dropdown-toggle">

@@ -157,6 +157,17 @@
       window.location.href="__URL__/delete/id/"+id;
     });
     }
+    function change(id){
+      $.ajax({
+        type:"post",
+        url:"{:url('Shop/change')}",
+        data:{id:id},
+        datatype:"text",
+        success:function(){
+          
+        }
+      })
+    }
   </script>
   <script>
     $(function () {
@@ -165,7 +176,7 @@
         //获取form表单,执行ajaxSubmit提交
         var name = $("#name").val();
     	  if($.trim(name) == ''){
-        	  layer.alert("请输入广告位名称！",{icon:5});
+        	  layer.alert("请输入名称！",{icon:5});
         	  return false;
           }
     	var id = $("#id").val();
@@ -191,8 +202,8 @@
     //向模态框写入数据
     function readData(data) {
     	$(".modal-title").text('修改');
-      $("#id").val(data.pl_id);
-      $("#name").val(data.pl_name);    
+      $("#id").val(data.id);
+      $("#name").val(data.name);    
       $('#add').modal('show');
     }
 

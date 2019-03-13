@@ -287,40 +287,6 @@ class Dd extends BaseAdmin
                 $dels=db("car_dd")->where("code='$v'")->setField("status",1);
             }
             
-            $moneys=$re['zprice'];
-            //公益金
-            $fund=($moneys/100*1);
-            db("fund")->where("id=1")->setInc("money",$fund);
-            //分红比例
-            $cobber=db("cobber")->where("id=2")->find();
-            $agio=$cobber['rabate'];
-            //分红金额
-            $money=($moneys/100*$agio);
-
-            //查询平台总股数
-            $shares=db("user")->sum("money");
-            
-            if($shares != 0){
-                //每股应返多少
-                $one=($money/$shares);
-                //查询用户的总股数
-                $user=db("user")->where("money > 0")->select();
-                if($user){
-                    foreach($user as $k => $v){
-                         $new_shares=($v['money']*$one);
-                         db("user")->where("uid={$v['uid']}")->setInc("money",$new_shares);
-
-                         //增加分红日志
-                         $data['u_id']=$v['uid'];
-                         $data['money']=$new_shares;
-                         $data['time']=time();
-                         db("money_log")->insert($data);
-                    }
-                }
-           
-            }
-
-
             $this->redirect("dai_dd");
         }else{
             $this->redirect("dai_dd");
@@ -576,7 +542,7 @@ class Dd extends BaseAdmin
         if($re){
            if($re['status'] == 1){
                $data['status']=2;
-               $data['f_time']=\time();
+               $data['fa_time']=\time();
                $res=db("car_dd")->where("did=$did")->update($data);
                
                $pay=$re['pay'];
@@ -584,22 +550,6 @@ class Dd extends BaseAdmin
                foreach ($arr as $v){
                    $ress=db("car_dd")->where("code='$v'")->update($data);
                }
-               //增加积分
-              /*  $uid=$re['uid'];
-               $user=db("user")->where("uid=$uid")->find();
-               if($user){
-                   $money=$re['zprice'];
-                   $resu=db("user")->where("uid=$uid")->setInc("integ",$money);
-               
-                   //增加积分日志
-                   $arrs['uid']=$uid;
-                   $arrs['type']="购物增加积分".$money;
-                   $arrs['time']=\time();
-                   $arrs['money']=$money;
-                   $arrs['status']=1;
-                   db("ji_log")->insert($arrs);
-               
-               } */
                
                $this->redirect('fa_dd');
            }else{
@@ -1421,7 +1371,7 @@ class Dd extends BaseAdmin
         $this->assign("addr",$addr);
         $this->assign("code",$code);
     
-        $list=db("car_dd")->alias('a')->where("status=6 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->paginate(20,false,['query'=>request()->param()]);
+        $list=db("car_dd")->alias('a')->where("status=5 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->paginate(20,false,['query'=>request()->param()]);
         $this->assign("list",$list);
         $page=$list->render();
         $this->assign("page",$page);
@@ -1511,7 +1461,7 @@ class Dd extends BaseAdmin
         $this->assign("addr",$addr);
         $this->assign("code",$code);
     
-        $list=db("car_dd")->alias('a')->where("status=7 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->paginate(20,false,['query'=>request()->param()]);
+        $list=db("car_dd")->alias('a')->where("status=6 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->paginate(20,false,['query'=>request()->param()]);
         $this->assign("list",$list);
         $page=$list->render();
         $this->assign("page",$page);
@@ -1522,12 +1472,12 @@ class Dd extends BaseAdmin
     {
         $did=\input('id');
         $re=db("car_dd")->where("did=$did")->find();
-        if($re['status'] == 6){
-            $res=db("car_dd")->where("did=$did")->setField("status",7);
+        if($re['status'] == 5){
+            $res=db("car_dd")->where("did=$did")->setField("status",6);
             $pay=$re['pay'];
             $pays=\explode(",", $pay);
             foreach ($pays as $v){
-                db("car_dd")->where("code='$v'")->setField("status",7);
+                db("car_dd")->where("code='$v'")->setField("status",6);
             }
             $this->redirect("tui_dd");
         }else{
@@ -1632,7 +1582,7 @@ class Dd extends BaseAdmin
         $this->assign("addr",$addr);
         $this->assign("code",$code);
     
-        $list=db("car_dd")->alias('a')->where("status=6 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->select();
+        $list=db("car_dd")->alias('a')->where("status=5 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->select();
         // var_dump($data);exit;
         vendor('PHPExcel.PHPExcel');//调用类库,路径是基于vendor文件夹的
         vendor('PHPExcel.PHPExcel.Worksheet.Drawing');
@@ -1789,7 +1739,7 @@ class Dd extends BaseAdmin
         $this->assign("addr",$addr);
         $this->assign("code",$code);
     
-        $list=db("car_dd")->alias('a')->where("status=7 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->select();
+        $list=db("car_dd")->alias('a')->where("status=6 and gid=0")->where($map)->join("addr b","a.a_id = b.aid","LEFT")->order("did desc")->select();
         // var_dump($data);exit;
         vendor('PHPExcel.PHPExcel');//调用类库,路径是基于vendor文件夹的
         vendor('PHPExcel.PHPExcel.Worksheet.Drawing');
