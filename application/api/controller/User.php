@@ -826,6 +826,7 @@ class User extends BaseApi
             $res=db("car_dd")->where(array('code'=>array('in',$pays)))->select();
             foreach ($res as $k => $v){
                 $arrs[$k]['gid']=$v['gid'];
+                $arrs[$k]['g_name']=$v['g_name'];
                 $arrs[$k]['g_image']=$url.$v['g_image'];
             }
             $arr=[
