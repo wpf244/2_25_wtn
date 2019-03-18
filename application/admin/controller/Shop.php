@@ -5,7 +5,7 @@ class Shop extends BaseAdmin
 {
     public function lister()
     {
-        $list=db("shop")->order("id desc")->paginate(10);
+        $list=db("shop")->where("apply",1)->order("id desc")->paginate(10);
         $page=$list->render();
         $this->assign("list",$list);
         $this->assign("page",$page);
@@ -125,5 +125,52 @@ class Shop extends BaseAdmin
             }
 
         }
+    }
+    public function apply()
+    {
+        $list=db("shop")->where("apply",0)->paginate(20);
+        $this->assign("list",$list);
+        $page=$list->render();
+        $this->assign("page",$page);
+        return $this->fetch();
+    }
+    public function apply_save()
+    {
+        $id=input("id");
+        $re=db("shop")->where("id",$id)->find();
+        $this->assign("re",$re);
+        return $this->fetch();
+    }
+    public function saves()
+    {
+        $data=input('post.');
+        $id=input("id");
+        $re=db("shop")->where("id",$id)->find();
+        if($re){
+            if(!is_string(input('logo'))){
+                $data['logo']=uploads('logo');
+            }
+            if(!is_string(input('image'))){
+                $data['image']=uploads('image');
+            }
+           
+            if(input('status')){
+                $data['status']=1;
+            }
+            if(input('goods_status')){
+                $data['goods_status']=1;
+            }
+            $data['apply']=1;
+            $data['addtime']=date("Y-m-d H:i:s");
+            $re=db("shop")->where("id",$id)->update($data);
+            if($re){
+                $this->success("审核通过成功",url('apply'));
+            }else{
+                $this->error("审核通过失败",url('apply'));
+            }
+        }else{
+            $this->error("非法操作",url('apply'));
+        }
+        
     }
 }

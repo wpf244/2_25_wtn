@@ -228,7 +228,7 @@ class Goods extends BaseApi
                 $data['g_id']=$gid;
                 $data['num']=$num;
                 $data['c_name']=$re['g_name'];
-                $data['c_image']=$re['g_image'];
+                $data['c_image']=$res['s_image'];
                 $data['price']=$res['s_xprice'];
                 $data['s_id']=$sid;
                 $data['s_name']=$res['s_name'];
@@ -280,7 +280,7 @@ class Goods extends BaseApi
         $re['sid']=$sid;
         $re['s_name']=$spec['s_name'];
         
-        $re['g_image']=$url.$re['g_image'];
+        $re['g_image']=$url.$spec['s_image'];
         $re['g_xprice']=$spec['s_xprice'];
         $re['x_total']=($num*$re['g_xprice']);
      
@@ -341,7 +341,7 @@ class Goods extends BaseApi
         $arr['price']=$spec['s_xprice'];
         $arr['zprice']=($spec['s_xprice']*$num+$freight);
         $arr['g_name']=$good['g_name'];
-        $arr['g_image']=$good['g_image'];
+        $arr['g_image']=$spec['s_image'];
         $arr['shopid']=$good['shopid'];
         $arr['freight']=$freight;
         $arr['a_id']=$aid;
@@ -358,7 +358,7 @@ class Goods extends BaseApi
         $all['s_name']=$spec['s_name'];
         $all['price']=$spec['s_xprice'];
         $all['g_name']=$good['g_name'];
-        $all['g_image']=$good['g_image'];;
+        $all['g_image']=$spec['s_image'];;
         $all['zprice']=($spec['s_xprice']*$num+$freight);
         $all['code']="AK-".uniqid().'a';
         $all['pay']=$arr['code'];

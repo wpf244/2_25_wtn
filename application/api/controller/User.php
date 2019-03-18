@@ -14,7 +14,10 @@ class User extends BaseApi
     {
         $uid=Request::instance()->header('uid');
 
-        $re=db("user")->field("nickname,image")->where("uid",$uid)->find();
+        $re=db("user")->field("nickname,image,integ")->where("uid",$uid)->find();
+
+        $re['num']=db("car")->where("u_id",$uid)->sum("num");
+        
     
         $arr=[
             'error_code'=>0,
@@ -518,7 +521,7 @@ class User extends BaseApi
             $arr=[
                 'error_code'=>1,
                 'msg'=>'没有数据',
-                'data'=>''
+                'data'=>[]
             ];
         }
       

@@ -22,7 +22,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="{:url('Index/index')}">首页</a>
           </li>
-          <li class="active">快递柜列表</li>
+          <li class="active">快递员列表</li>
         </ul>
 
       </div>
@@ -35,7 +35,7 @@
               <div class="page-header">
                 <div class="row">
                 <div class="col-sm-4">
-                <a class="btn btn-success btn-white btn-bold" href="{:url('Sark/adds')}">
+                <a class="btn btn-success btn-white btn-bold" href="{:url('Express/adds')}">
                   <i class="ace-icon fa fa-plus icon-only"></i>
                   添加</a>
                 <!-- <button id="change" class="btn btn-warning btn-white btn-bold">
@@ -93,9 +93,10 @@
                 <tr>
                  
                   <th>ID</th>
-                  <th>编号</th>
-                  <th>详细地址</th>
-                  <th>绑定手机号码</th>
+                  <th>姓名</th>
+                  <th>所属公司</th>
+                  <th>所属区域</th>
+                  <th>手机号码</th>
                   <th>添加时间</th>
                 
                   <th style="border-right:#ddd solid 1px;width:7%;" >操作</th>
@@ -106,19 +107,19 @@
                 {volist name="list" id="v"}
                 <tr class="ace-thumbnails">
                  
-                  <td><span class="badge badge-grey">{$v.id}</span></td>
-                  <td>{$v.code}</td>
-                  <td>{$v.addr}</td>
-                  <td>
-                    {$v.phone}
-                  </td>
+                  <td><span class="badge badge-grey">{$v.cid}</span></td>
+                  <td>{$v.name}</td>
+                  <td>{$v.ex_name}</td>
+                  <td>{$v.a_name}</td>
+                  <td>{$v.phone}</td>
+                 
                   <td>{$v.time}</td>
                   
                   <td>
-                    <a class="btn btn-xs btn-info" href="{:url('Sark/modifys',array('id'=>$v['id']))}">
+                    <a class="btn btn-xs btn-info" href="{:url('Express/modify',array('id'=>$v['cid']))}">
                       <i class="ace-icon fa fa-pencil bigger-120"></i>
                     </a>
-                    <button class="btn btn-xs btn-danger" type="button" onclick="dels({$v.id})">
+                    <button class="btn btn-xs btn-danger" type="button" onclick="dels({$v.cid})">
                       <i class="ace-icon fa fa-trash-o bigger-120"></i>
                     </button>
                   </td>
@@ -128,9 +129,7 @@
                 </tbody>
                 <!-- </form> -->
               </table>
-              <div class="text-center">
-                {$page}
-              </div>
+           
             </div>
           </div><!-- /.col -->
         </div><!-- /.row -->

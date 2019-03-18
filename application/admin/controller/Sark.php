@@ -63,7 +63,7 @@ class Sark extends BaseAdmin
     }
     public function lister()
     {
-        $list=db("sark")->alias("a")->join("sark_addr b","a.aid=b.a_id")->order("id desc")->paginate(20);
+        $list=db("sark")->order("id desc")->paginate(20);
         $this->assign("list",$list);
         $page=$list->render();
         $this->assign("page",$page);
@@ -71,8 +71,7 @@ class Sark extends BaseAdmin
     }
     public function adds()
     {
-        $res=db("sark_addr")->select();
-        $this->assign("res",$res);
+       
         return $this->fetch();
     }
     public function save()
@@ -103,8 +102,7 @@ class Sark extends BaseAdmin
     }
     public function modifys()
     {
-        $res=db("sark_addr")->select();
-        $this->assign("res",$res);
+    
 
         $id=\input("id");
         $re=db("sark")->where("id",$id)->find();
@@ -134,6 +132,54 @@ class Sark extends BaseAdmin
             $this->error("非法操作",url("lister"));
         }
        
+    }
+    public function free()
+    {
+        $re=db("free")->where("id",1)->find();
+        $this->assign("re",$re);
+        return $this->fetch();
+    }
+    public function savef()
+    {
+        $data=input("post.");
+        $re=db("free")->where("id",1)->update($data);
+        if($re){
+            $this->success("修改成功");
+        }else{
+            $this->error("修改失败");
+        }
+    }
+    public function money()
+    {
+        $re=db("free")->where("id",2)->find();
+        $this->assign("re",$re);
+        return $this->fetch();
+    }
+    public function savem()
+    {
+        $data=input("post.");
+        $re=db("free")->where("id",2)->update($data);
+        if($re){
+            $this->success("修改成功");
+        }else{
+            $this->error("修改失败");
+        }
+    }
+    public function sales()
+    {
+        $re=db("free")->where("id",3)->find();
+        $this->assign("re",$re);
+        return $this->fetch();
+    }
+    public function savel()
+    {
+        $data=input("post.");
+        $re=db("free")->where("id",3)->update($data);
+        if($re){
+            $this->success("修改成功");
+        }else{
+            $this->error("修改失败");
+        }
     }
 
 }

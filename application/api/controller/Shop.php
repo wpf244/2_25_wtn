@@ -161,6 +161,48 @@ class Shop extends BaseApi
     
         echo \json_encode($arr);        
      }
+     /**
+     * 店铺申请
+     *
+     * @return void
+     */
+     public function apply()
+     {
+         $re=db("lb")->field("desc")->where("fid",8)->find();
+         $re['desc']=strip_tags($re['desc']);
+         $arr=[
+            'error_code'=>0,
+            'msg'=>"收藏成功",
+            'data'=>$re
+        ];
+        echo \json_encode($arr); 
+     }
+     /**
+     * 提交申请
+     *
+     * @return void
+     */
+     public function apply_save()
+     {
+         $data=input("post.");
+         $data['apply']=0;
+         $re=db("shop")->insert($data);
+         if($re){
+            $arr=[
+                'error_code'=>0,
+                'msg'=>"提交成功",
+                'data'=>''
+            ];
+         }else{
+            $arr=[
+                'error_code'=>1,
+                'msg'=>"系统繁忙,请稍后再试",
+                'data'=>''
+            ];
+         }
+         echo \json_encode($arr); 
+     }
+
 
 
 }

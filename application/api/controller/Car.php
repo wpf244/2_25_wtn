@@ -368,7 +368,7 @@ class Car extends BaseApi
                     $zprice+=$arr['zprice'];
                     $gname.=$v['c_name'];
                     $freight+=$goods['g_freight'];
-                    //$del=db('car')->where("cid={$v['cid']}")->delete();
+                    $del=db('car')->where("cid={$v['cid']}")->delete();
                 }
                 
                

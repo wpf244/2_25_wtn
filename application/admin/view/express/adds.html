@@ -22,7 +22,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="{:url('Index/index')}">首页</a>
           </li>
-          <li class="active">添加快递柜</li>
+          <li class="active">添加快递员</li>
         </ul><!-- /.breadcrumb -->
 
       </div>
@@ -34,41 +34,55 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="col-sm-10 col-sm-offset-1">
-              <form id="logoForm" class="form-horizontal" action="{:url('Sark/save')}" method="post" enctype="multipart/form-data">
+              <form id="logoForm" class="form-horizontal" action="{:url('Express/saves')}" method="post" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-sm-7">
                     <div class="widget-box transparent">
                       <div class="widget-header widget-header-flat">
-                        <h4 class="widget-title"><i class="ace-icon fa fa-leaf green"></i>快递柜信息</h4>
+                        <h4 class="widget-title"><i class="ace-icon fa fa-leaf green"></i>快递员信息</h4>
                       </div>
                       <div class="widget-body">
                         <div class="widget-main">
 
-                          
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="">所属快递</label>
+                                <div class="col-sm-10">
+                                  <select class="form-control" name="eid" required>
+                                   {volist name="express" id="vv"}
+                                    <option value="{$vv.ex_id}">{$vv.ex_name}</option>
+                                   {/volist}
+                                  </select>
+                                </div> 
+                            </div>
+
+                          <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="">负责区域</label>
+                                    <div class="col-sm-10">
+                                      <select class="form-control" name="aid" required>
+                                       {volist name="res" id="v"}
+                                        <option value="{$v.a_id}">{$v.a_name}</option>
+                                       {/volist}
+                                      </select>
+                                    </div> 
+                                </div>
                        
                           <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right" for="">编号</label>
+                            <label class="col-sm-2 control-label no-padding-right" for="">姓名</label>
                             <div class="col-sm-10">
-                              <input class="form-control" type="text" name="code" >
+                              <input class="form-control" type="text" name="name" required >
                             </div>
                             
                           </div>
 
                           <div class="form-group">
-                              <label class="col-sm-2 control-label no-padding-right" for="">详细地址</label>
+                              <label class="col-sm-2 control-label no-padding-right" for="">手机号码</label>
                               <div class="col-sm-10">
-                                <input class="form-control" type="text" name="addr" >
+                                <input class="form-control" type="text" name="phone" required >
                               </div>
                               
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right" for="">绑定手机号码</label>
-                                <div class="col-sm-10">
-                                  <input class="form-control" type="text" name="phone" placeholder="请输入手机号码,多个请用@隔开" >
-                                </div>
-                                
-                              </div>
+                          
                        
                         </div>
                       </div>

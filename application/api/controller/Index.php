@@ -21,6 +21,9 @@ class Index extends BaseApi
         foreach($goods as $kk => $vv){
             $goods[$kk]['g_images']=$url.$vv['g_images'];
         }
+        //商城公告
+        $notice=db("lb")->field("name")->where(["fid"=>7,"status"=>1])->select();
+
 
         $arr=[
             'error_code'=>0,
@@ -28,7 +31,8 @@ class Index extends BaseApi
             'data'=>[
                 'banner'=>$banner,
                 'poster'=>$poster,
-                'goods'=>$goods
+                'goods'=>$goods,
+                'notice'=>$notice
             ]
         ];
           
