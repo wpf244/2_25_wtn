@@ -97,7 +97,7 @@ class Goods extends BaseAdmin{
 
             $data['g_images']='/thumb/'.uniqid('',true).'.jpg';
             $data['g_thumb']='/thumb/'.md5(time()).'.jpg';
-            $image = \think\Image::open(request()->file('g_image'));
+            $image = \think\Image::open(ROOT_PATH.'/public/'.$data['g_image']);
             $image->thumb(167,78,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_images']);
             $image->thumb(140,140,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_thumb']);
         }
@@ -268,7 +268,7 @@ class Goods extends BaseAdmin{
                
                 $data['g_images']='/thumb/'.uniqid('',true).'.jpg';
                 $data['g_thumb']='/thumb/'.md5(time()).'.jpg';
-                $image = \think\Image::open(request()->file('g_image'));
+                $image = \think\Image::open(ROOT_PATH.'/public/'.$data['g_image']);
                 $image->thumb(167,78,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_images']);
                 $image->thumb(140,140,\think\Image::THUMB_CENTER)->save(ROOT_PATH.'/public/'.$data['g_thumb']);
             }else{

@@ -823,7 +823,7 @@ class User extends BaseApi
             
             $pay=$re['pay'];
             $pays=\explode(",", $pay);
-            $res=db("car_dd")->where(array('code'=>array('in',$pays)))->select();
+            $res=db("car_dd")->where(array('code'=>array('in',$pays)))->group("gid")->select();
             foreach ($res as $k => $v){
                 $arrs[$k]['gid']=$v['gid'];
                 $arrs[$k]['g_name']=$v['g_name'];
