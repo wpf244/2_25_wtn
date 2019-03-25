@@ -17,7 +17,7 @@ class User extends BaseApi
         $re=db("user")->field("nickname,image,integ")->where("uid",$uid)->find();
 
         $re['num']=db("car")->where("u_id",$uid)->sum("num");
-        
+        $re['phone']=db("sys")->where("id",1)->find()['phone'];
     
         $arr=[
             'error_code'=>0,
@@ -986,6 +986,10 @@ class User extends BaseApi
             if($c_time < 300){
                  db("code")->where("id",$re['id'])->delete();
                 $data['phone']=$phone;
+                $sark=db("sark_phone")->where("phone",$phone)->find();
+                if($sark){
+                    $data['code']=$sark['code'];
+                }
                 $res=db("user")->where("uid",$uid)->update($data);
                 if($res){
                     $arr=[

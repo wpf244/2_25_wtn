@@ -63,7 +63,7 @@ class Sark extends BaseAdmin
     }
     public function lister()
     {
-        $list=db("sark")->order("id desc")->paginate(20);
+        $list=db("sark")->alias("a")->field("a.*,b.firm_name")->join("sark_firm b","a.fid=b.id","left")->order("id desc")->paginate(20);
         $this->assign("list",$list);
         $page=$list->render();
         $this->assign("page",$page);
@@ -71,8 +71,9 @@ class Sark extends BaseAdmin
     }
     public function adds()
     {
-       
-        return $this->fetch();
+       $res=db("sark_firm")->select();
+       $this->assign("res",$res);
+       return $this->fetch();
     }
     public function save()
     {
@@ -83,7 +84,18 @@ class Sark extends BaseAdmin
        if($re){
            $this->error("此编号已存在",url('lister'));exit;
        }else{
+         
            $rea=db("sark")->insert($data);
+           $phone=input("phone");
+           if($phone){
+             $phones=\explode("@",$phone);
+             foreach($phones as $v){
+                 $datas['code']=$code;
+                 $datas['phone']=$v;
+                 db("sark_phone")->insert($datas);
+             }
+           }
+           
            if($rea){
                $this->success("添加成功",url("lister"));
            }else{
@@ -103,7 +115,8 @@ class Sark extends BaseAdmin
     public function modifys()
     {
     
-
+        $res=db("sark_firm")->select();
+        $this->assign("res",$res);
         $id=\input("id");
         $re=db("sark")->where("id",$id)->find();
         $this->assign("re",$re);
@@ -122,6 +135,20 @@ class Sark extends BaseAdmin
                 $this->error("此编号已存在",url('lister'));exit;
             }else{
                 $rea=db("sark")->where("id",$id)->update($data);
+                $res=db("sark_phone")->where("code",$code)->select();
+                if($res){
+                    db("sark_phone")->where("code",$code)->delete();
+                }
+                $phone=input("phone");
+                if($phone){
+                    $phones=\explode("@",$phone);
+                    foreach($phones as $v){
+                        $datas['code']=$code;
+                        $datas['phone']=$v;
+                        db("sark_phone")->insert($datas);
+                    }
+                }
+               
                 if($rea){
                     $this->success("修改成功",url("lister"));
                 }else{
@@ -180,6 +207,62 @@ class Sark extends BaseAdmin
         }else{
             $this->error("修改失败");
         }
+    }
+    public function firm()
+    {
+        $list=db("sark_firm")->order("id desc")->paginate(10);
+        $this->assign("list",$list);
+        $page=$list->render();
+        $this->assign("page",$page);
+        return $this->fetch();
+    }
+    public function addf()
+    {
+        return $this->fetch();
+    }
+    public function savems()
+    {
+        $data=input("post.");
+        $re=db("sark_firm")->insert($data);
+        if($re){
+            $this->success("添加成功",url('firm'));
+        }else{
+            $this->error("添加失败",url('firm'));
+        }
+    }
+    public function modifyf()
+    {
+        $id=input("id");
+        $re=db("sark_firm")->where("id",$id)->find();
+        $this->assign("re",$re);
+        return $this->fetch();
+    }
+    public function usavems()
+    {
+        $data=input("post.");
+        $a_id=input("id");
+        
+        $re=db("sark_firm")->where("id",$a_id)->find();
+        if($re){
+
+            $res=db("sark_firm")->where("id",$a_id)->update($data);
+            if($res){
+                $this->success("修改成功",url("firm"));
+            }else{
+                $this->error("修改失败",url("firm"));
+            }
+        }else{
+            $this->error("非法操作",url("firm"));
+        }
+    }
+    public function deletef()
+    {
+        $id=input("id");
+        $re=db("sark_firm")->where("id",$id)->find();
+        if($re){
+            $del=db("sark_firm")->where("id",$id)->delete();
+        }
+        $this->redirect("firm");
     }
 
 }

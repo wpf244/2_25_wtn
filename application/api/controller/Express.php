@@ -208,35 +208,47 @@ class Express extends Common
         $uid=Request::instance()->header("uid");
         $did=input("did");
         $dd=db("express_dd")->where(["u_id"=>$uid,"id"=>$did])->find();
-        if($dd){
-            if($dd['status'] == 1){
-                if($dd['type'] == 0){
-                    $arr=[
-                        'error_code'=>0,
-                        'msg'=>"可以开锁",
-                        'data'=>''
-                    ];
+        $code=input("code");
+        $re=db("sark")->where("code",$code)->find();
+        if($re){
+            $re['firm']=db("sark_firm")->where("id",$re['fid'])->find()['firm_name'];
+            if($dd){
+                if($dd['status'] == 1){
+                    if($dd['type'] == 0){
+                        $arr=[
+                            'error_code'=>0,
+                            'msg'=>"可以开锁",
+                            'data'=>$re
+                        ];
+                    }else{
+                        $arr=[
+                            'error_code'=>3,
+                            'msg'=>"订单状态异常",
+                            'data'=>''
+                        ];
+                    }
                 }else{
                     $arr=[
-                        'error_code'=>3,
-                        'msg'=>"订单状态异常",
+                        'error_code'=>2,
+                        'msg'=>"订单未支付",
                         'data'=>''
                     ];
                 }
             }else{
                 $arr=[
-                    'error_code'=>2,
-                    'msg'=>"订单未支付",
+                    'error_code'=>1,
+                    'msg'=>"订单异常",
                     'data'=>''
                 ];
             }
         }else{
             $arr=[
-                'error_code'=>1,
-                'msg'=>"订单异常",
+                'error_code'=>4,
+                'msg'=>"快递柜信息没有录入",
                 'data'=>''
             ];
         }
+        
         echo json_encode($arr);
     }
     /**
@@ -374,47 +386,62 @@ class Express extends Common
         $uid=Request::instance()->header("uid");
         $did=input("did");
         $dd=db("express_dd")->where(["u_id"=>$uid,"id"=>$did])->find();
-        if($dd){
-            if($dd['status'] == 1){
-                if($dd['type'] == 1){
-                    //判断箱子状态
-                    $code=$dd['number'];
-                    $re=db("sark")->where("code",$code)->find();
-                    if($re['status'] == 1){
-                        $arr=[
-                            'error_code'=>0,
-                            'msg'=>"可以开锁",
-                            'data'=>''
-                        ];
+
+        $code=input("code");
+        $re=db("sark")->where("code",$code)->find();
+
+        if($re){
+            $re['firm']=db("sark_firm")->where("id",$re['fid'])->find()['firm_name'];
+            if($dd){
+                if($dd['status'] == 1){
+                    if($dd['type'] == 1){
+                        //判断箱子状态
+                        $code=$dd['number'];
+                        $re=db("sark")->where("code",$code)->find();
+                        if($re['status'] == 1){
+                            $arr=[
+                                'error_code'=>0,
+                                'msg'=>"可以开锁",
+                                'data'=>$re
+                            ];
+                        }else{
+                            $arr=[
+                                'error_code'=>4,
+                                'msg'=>"柜子已占用,请联系业主",
+                                'data'=>''
+                            ];
+                        }
+                        
                     }else{
                         $arr=[
-                            'error_code'=>4,
-                            'msg'=>"柜子已占用,请联系业主",
+                            'error_code'=>3,
+                            'msg'=>"订单状态异常",
                             'data'=>''
                         ];
                     }
-                    
                 }else{
                     $arr=[
-                        'error_code'=>3,
-                        'msg'=>"订单状态异常",
+                        'error_code'=>2,
+                        'msg'=>"订单未支付",
                         'data'=>''
                     ];
                 }
             }else{
                 $arr=[
-                    'error_code'=>2,
-                    'msg'=>"订单未支付",
+                    'error_code'=>1,
+                    'msg'=>"订单异常",
                     'data'=>''
                 ];
             }
         }else{
             $arr=[
-                'error_code'=>1,
-                'msg'=>"订单异常",
+                'error_code'=>4,
+                'msg'=>"快递柜信息没有录入",
                 'data'=>''
             ];
         }
+
+        
         echo json_encode($arr);
     }
 

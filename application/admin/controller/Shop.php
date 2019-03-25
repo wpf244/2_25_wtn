@@ -105,6 +105,17 @@ class Shop extends BaseAdmin
         }
         $this->redirect("lister");
     }
+    public function deletes()
+    {
+        $id=input("id");
+        $re=db("shop")->where("id",$id)->find();
+        if($re){
+            $del=db("shop")->where("id",$id)->delete();
+         
+
+        }
+        $this->redirect("apply");
+    }
     public function changes()
     {
         $id=input("id");

@@ -22,7 +22,7 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="{:url('Index/index')}">首页</a>
           </li>
-          <li class="active">快递柜列表</li>
+          <li class="active">厂商列表</li>
         </ul>
 
       </div>
@@ -35,7 +35,7 @@
               <div class="page-header">
                 <div class="row">
                 <div class="col-sm-4">
-                <a class="btn btn-success btn-white btn-bold" href="{:url('Sark/adds')}">
+                <a class="btn btn-success btn-white btn-bold" href="{:url('Sark/addf')}">
                   <i class="ace-icon fa fa-plus icon-only"></i>
                   添加</a>
                 <!-- <button id="change" class="btn btn-warning btn-white btn-bold">
@@ -93,14 +93,9 @@
                 <tr>
                  
                   <th>ID</th>
-                  <th>所属厂商</th>
-                  <th>编号</th>
-                  <th>设备id</th>
-                  <th>服务id</th>
-                  <th>特征码id</th>
-                  <th>详细地址</th>
-                  <th>绑定手机号码</th>
-                  <th>添加时间</th>
+                  <th>厂商名称</th>
+                  <th>识别码</th>
+          
                 
                   <th style="border-right:#ddd solid 1px;width:7%;" >操作</th>
                 </tr>
@@ -112,18 +107,10 @@
                  
                   <td><span class="badge badge-grey">{$v.id}</span></td>
                   <td>{$v.firm_name}</td>
-                  <td>{$v.code}</td>
-                  <td>{$v.deviceId}</td>
-                  <td>{$v.serviceId}</td>
-                  <td>{$v.characteristicId}</td>
-                  <td>{$v.addr}</td>
+                  <td>{$v.firm_code}</td>
+             
                   <td>
-                    {$v.phone}
-                  </td>
-                  <td>{$v.time}</td>
-                  
-                  <td>
-                    <a class="btn btn-xs btn-info" href="{:url('Sark/modifys',array('id'=>$v['id']))}">
+                    <a class="btn btn-xs btn-info" href="{:url('Sark/modifyf',array('id'=>$v['id']))}">
                       <i class="ace-icon fa fa-pencil bigger-120"></i>
                     </a>
                     <button class="btn btn-xs btn-danger" type="button" onclick="dels({$v.id})">
@@ -170,7 +157,7 @@
 		function dels(id){
 			layer.confirm('你确定删除吗？', {icon: 3}, function(index){
 		    layer.close(index);
-		    window.location.href="__URL__/deletes/id/"+id;
+		    window.location.href="__URL__/deletef/id/"+id;
 		  });
 	    }
 		</script>

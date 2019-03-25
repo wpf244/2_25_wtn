@@ -99,7 +99,7 @@
                   <th>身份证号码</th>
                   <th>联系地址</th>
                 
-                  <th style="border-right:#ddd solid 1px;width:7%;" >操作</th>
+                  <th style="border-right:#ddd solid 1px;width:10%;" >操作</th>
                 </tr>
                 </thead>
                 <!-- <form id="sortForm" action="{:url('Goods/sort')}" method="post">  -->
@@ -114,7 +114,9 @@
                   <td>{$v.idcode}</td>
                   <td>{$v.addr}</td>
                   <td>
-                   
+                    <button class="btn btn-xs btn-danger" type="button" onclick="dels({$v['id']})" title="删除">
+                      删除
+                      </button>
                     <a class="btn btn-xs btn-info" href="{:url('Shop/apply_save',array('id'=>$v['id']))}">
                       通过审核
                     </a>
@@ -159,7 +161,7 @@
 		function dels(id){
 			layer.confirm('你确定删除吗？', {icon: 3}, function(index){
 		    layer.close(index);
-		    window.location.href="__URL__/delete/id/"+id;
+		    window.location.href="__URL__/deletes/id/"+id;
 		  });
 	    }
 		</script>
