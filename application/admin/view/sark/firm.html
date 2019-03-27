@@ -95,7 +95,9 @@
                   <th>ID</th>
                   <th>厂商名称</th>
                   <th>识别码</th>
-          
+                  <th>服务UUID</th>
+                  <th>读取特征码UUID</th>
+                  <th>写入特征码UUID</th>
                 
                   <th style="border-right:#ddd solid 1px;width:7%;" >操作</th>
                 </tr>
@@ -108,6 +110,9 @@
                   <td><span class="badge badge-grey">{$v.id}</span></td>
                   <td>{$v.firm_name}</td>
                   <td>{$v.firm_code}</td>
+                  <td>{$v.serviceId}</td>
+                  <td>{$v.readId}</td>
+                  <td>{$v.writeId}</td>
              
                   <td>
                     <a class="btn btn-xs btn-info" href="{:url('Sark/modifyf',array('id'=>$v['id']))}">

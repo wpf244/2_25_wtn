@@ -63,7 +63,7 @@ class Express extends Common
         $uid=Request::instance()->header("uid");
         $code=db("user")->where("uid",$uid)->find()['code'];
         if($code){
-            $sark=db("sark")->field("id,code,status")->where("code",$code)->find();
+            $sark=db("sark")->alias("a")->field("a.*,b.*,b.id as bid")->where("code",$code)->join("sark_firm b","b.id = a.fid")->find();
             if($sark){
                 $arr=[
                     'error_code'=>0,
@@ -209,9 +209,9 @@ class Express extends Common
         $did=input("did");
         $dd=db("express_dd")->where(["u_id"=>$uid,"id"=>$did])->find();
         $code=input("code");
-        $re=db("sark")->where("code",$code)->find();
+        $re=db("sark")->alias("a")->field("a.*,b.*,b.id as bid,b.firm_code as firm")->where("code",$code)->join("sark_firm b","b.id = a.fid")->find();
         if($re){
-            $re['firm']=db("sark_firm")->where("id",$re['fid'])->find()['firm_name'];
+        //    $re['firm']=db("sark_firm")->where("id",$re['fid'])->find()['firm_name'];
             if($dd){
                 if($dd['status'] == 1){
                     if($dd['type'] == 0){
@@ -388,17 +388,17 @@ class Express extends Common
         $dd=db("express_dd")->where(["u_id"=>$uid,"id"=>$did])->find();
 
         $code=input("code");
-        $re=db("sark")->where("code",$code)->find();
+        $re=db("sark")->alias("a")->field("a.*,b.*,b.id as bid,b.firm_code as firm")->where("code",$code)->join("sark_firm b","b.id = a.fid")->find();
 
         if($re){
-            $re['firm']=db("sark_firm")->where("id",$re['fid'])->find()['firm_name'];
+         //   $re['firm']=db("sark_firm")->where("id",$re['fid'])->find()['firm_name'];
             if($dd){
                 if($dd['status'] == 1){
                     if($dd['type'] == 1){
                         //判断箱子状态
                         $code=$dd['number'];
-                        $re=db("sark")->where("code",$code)->find();
-                        if($re['status'] == 1){
+                        $res=db("sark")->where("code",$code)->find();
+                        if($res['status'] == 1){
                             $arr=[
                                 'error_code'=>0,
                                 'msg'=>"可以开锁",
