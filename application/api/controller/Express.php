@@ -63,7 +63,7 @@ class Express extends Common
         $uid=Request::instance()->header("uid");
         $code=db("user")->where("uid",$uid)->find()['code'];
         if($code){
-            $sark=db("sark")->alias("a")->field("a.*,b.*,b.id as bid")->where("code",$code)->join("sark_firm b","b.id = a.fid")->find();
+            $sark=db("sark")->alias("a")->field("a.*,a.id as aid,b.*,b.id as bid")->where("code",$code)->join("sark_firm b","b.id = a.fid")->find();
             if($sark){
                 $arr=[
                     'error_code'=>0,
