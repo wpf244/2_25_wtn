@@ -771,6 +771,21 @@ class User extends BaseApi
             if($re){
                 if($re['status'] == 2){
                    $res=db('car_dd')->where("uid=$uid and did=$did")->setField("status",3);
+
+                   $shopid=$re['shopid'];
+                   if($shopid != 0){
+                       $money=$re['zprice'];
+                       db("shop")->where("id",$shopid)->setInc("money",$money);
+
+                       //增加商户收支明细
+                       $data['shopid']=$shopid;
+                       $data['money']=$money;
+                       $data['did']=$re['did'];
+                       $data['time']=time();
+                       $data['status']=1;
+                       db("moneys_log")->insert($data);
+                   }
+
                    $pay=$re['pay'];
                    $pays=\explode(",", $pay);
                    

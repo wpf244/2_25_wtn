@@ -193,11 +193,41 @@ $(function(){
 
           <b class="arrow"></b>
         </li>
-        
-      
+
+       
 
       </ul>
     </li>
+
+    {if condition="CONTROLLER_NAME eq 'Money'"}<li class="open">{else /}<li class="">{/if}
+      <a href="#" class="dropdown-toggle">
+        <i class="menu-icon fa fa-money"></i>
+        <span class="menu-text"> 账户资金 </span>
+        <b class="arrow fa fa-angle-down"></b>
+      </a>
+
+      <b class="arrow"></b>
+      <ul class="submenu">
+       {if condition="ACTION_NAME eq 'cash'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Money/cash')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            提现
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+<!-- 
+        {if condition="ACTION_NAME eq 'log'"}<li class="active">{else /}<li class="">{/if}
+          <a href="{:url('Money/log')}">
+            <i class="menu-icon fa fa-caret-right"></i>
+            收支明细
+          </a>
+
+          <b class="arrow"></b>
+        </li> -->
+      </ul>
+    </li>
+  
 
     <!-- {if condition="CONTROLLER_NAME eq 'Lb'"}<li class="open">{else /}<li class="">{/if}
       <a href="#" class="dropdown-toggle">
