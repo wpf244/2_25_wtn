@@ -17,9 +17,9 @@ class Index extends BaseApi
         $poster['image']=$url.$poster['image'];
 
         //精选爆款
-        $goods=db("goods")->field("gid,g_images")->where(["g_up"=>1,"g_status"=>1,"g_audi"=>1])->order(["g_sort asc","gid desc"])->limit(0,4)->select();
+        $goods=db("goods")->field("gid,g_image")->where(["g_up"=>1,"g_status"=>1,"g_audi"=>1])->order(["g_sort asc","gid desc"])->limit(0,4)->select();
         foreach($goods as $kk => $vv){
-            $goods[$kk]['g_images']=$url.$vv['g_images'];
+            $goods[$kk]['g_images']=$url.$vv['g_image'];
         }
         //商城公告
         $notice=db("lb")->field("name")->where(["fid"=>7,"status"=>1])->select();
@@ -53,9 +53,9 @@ class Index extends BaseApi
         $banner['image']=$url.$banner['image'];
 
         //商品
-        $goods=db("goods")->field("gid,g_thumb,g_xprice,g_name")->where(["g_up"=>1,"g_status"=>1,"g_audi"=>1])->order(["g_sort asc","gid desc"])->select();
+        $goods=db("goods")->field("gid,g_image,g_xprice,g_name")->where(["g_up"=>1,"g_status"=>1,"g_audi"=>1])->order(["g_sort asc","gid desc"])->select();
         foreach($goods as $kk => $vv){
-            $goods[$kk]['g_thumb']=$url.$vv['g_thumb'];
+            $goods[$kk]['g_thumb']=$url.$vv['g_image'];
         }
         $arr=[
             'error_code'=>0,
@@ -122,9 +122,9 @@ class Index extends BaseApi
             $order=["g_sort asc","gid desc"];
         }
         
-        $goods=db("goods")->field("gid,g_name,g_xprice,desc,tag,g_sales,g_thumb,shopid")->where(["g_up"=>1,"g_audi"=>1])->where("g_name","like","%".$keywords."%")->order($order)->select();
+        $goods=db("goods")->field("gid,g_name,g_xprice,desc,tag,g_sales,g_image,shopid")->where(["g_up"=>1,"g_audi"=>1])->where("g_name","like","%".$keywords."%")->order($order)->select();
         foreach($goods as $k => $v){
-            $goods[$k]['g_thumb']=$url.$v['g_thumb'];
+            $goods[$k]['g_thumb']=$url.$v['g_image'];
             $tag=explode("@",$v['tag']);
             $goods[$k]['tag']=$tag;
         }

@@ -76,7 +76,9 @@ class Pay extends Controller
                 $re=db("car_dd")->where("code='$order_code'")->find();
                 $id=$re['did'];
                 if($re['status'] == 0){
-                    $changestatus=db("car_dd")->where("did=$id")->setField("status",1);
+                    $data['fu_time']=time();
+                    $data['status']=1;
+                    $changestatus=db("car_dd")->where("did=$id")->update($data);
                     if($changestatus){
                         $pay = $re['pay'];
                         $res = explode(",",$pay);
@@ -86,7 +88,7 @@ class Pay extends Controller
                             $gid = $dd['gid'];
                             $did = $dd['did'];
                             $num = $dd['num'];
-                            $re_d = db("car_dd")->where("did=$did")->setField("status",1);
+                            $re_d = db("car_dd")->where("did=$did")->update($data);
                             
                             //增加销量
                             $sales=db("goods")->where("gid=$gid")->setInc("g_sales",$num);

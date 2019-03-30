@@ -714,19 +714,19 @@ class User extends BaseApi
             $re=db("car_dd")->where("uid=$uid and did=$did")->find();
             if($re){
                 if($re['status'] != 0){
-                    $arr['tui_content']=input("content");
-                    $arr['reason']=input("reason");
-                    $arr['tui_time']=time();
-                    $arr['status']=5;
+                    $arrs['tui_content']=input("content");
+                    $arrs['reason']=input("reason");
+                    $arrs['tui_time']=time();
+                    $arrs['status']=5;
                     $pay=$re['pay'];
                     $pays=explode(",",$pay);
                     foreach($pays as $v){
                         $red=db("car_dd")->where("code='$v'")->find();
                         if($red){
-                            db("car_dd")->where("code='$v'")->update($arr);
+                            db("car_dd")->where("code='$v'")->update($arrs);
                         }
                     }
-                    $res=db("car_dd")->where("uid=$uid and did=$did")->update($arr);
+                    $res=db("car_dd")->where("uid=$uid and did=$did")->update($arrs);
                     if($res){
                         $arr=[
                             'error_code'=>0,
