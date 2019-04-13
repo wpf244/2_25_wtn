@@ -1,6 +1,6 @@
 <?php
 require_once "WxPay.Exception.php";
-require_once "WxPay.Config.php";
+// require_once "WxPay.Config.php";
 require_once "WxPay.Data.php";
 require_once "WxPay.Notify.php";
 require_once "WxPay.JsApiPay.php";
@@ -25,7 +25,7 @@ class WxPayApi
 	 * @throws WxPayException
 	 * @return 成功时返回，其他抛异常
 	 */
-	public static function unifiedOrder($inputObj, $timeOut = 6)
+	public static function unifiedOrder($inputObj, $data,$timeOut = 6)
 	{
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		//检测必填参数
@@ -52,19 +52,20 @@ class WxPayApi
 			$inputObj->SetNotify_url(WxPayConfig::NOTIFY_URL);//异步通知url
 		}
 		
-		$inputObj->SetAppid(WxPayConfig::APPID);//公众账号ID
-		$inputObj->SetMch_id(WxPayConfig::MCHID);//商户号
+		$inputObj->SetAppid($data['appid']);//公众账号ID
+		$inputObj->SetMch_id($data['mchid']);//商户号
 		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip	  
 		//$inputObj->SetSpbill_create_ip("1.1.1.1");  	    
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 		
 		//签名
-		$inputObj->SetSign();
+		
+		$inputObj->SetSign($data['key']);
 		$xml = $inputObj->ToXml();
 		
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($xml, $url, false, $timeOut);
-		$result = WxPayResults::Init($response);
+		$result = WxPayResults::Init($data['key'],$response);
 		self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
 		
 		return $result;
@@ -462,12 +463,11 @@ class WxPayApi
 	private static function reportCostTime($url, $startTimeStamp, $data)
 	{
 		//如果不需要上报数据
-		if(WxPayConfig::REPORT_LEVENL == 0){
-			return;
-		} 
-		//如果仅失败上报
-		if(WxPayConfig::REPORT_LEVENL == 1 &&
-			 array_key_exists("return_code", $data) &&
+		// if(WxPayConfig::REPORT_LEVENL == 0){
+		// 	return;
+		// } 
+		//如果仅失败上报 WxPayConfig::REPORT_LEVENL == 1 &&
+		if(array_key_exists("return_code", $data) &&
 			 $data["return_code"] == "SUCCESS" &&
 			 array_key_exists("result_code", $data) &&
 			 $data["result_code"] == "SUCCESS")
@@ -532,11 +532,11 @@ class WxPayApi
 		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
 		
 		//如果有配置代理这里就设置代理
-		if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0" 
-			&& WxPayConfig::CURL_PROXY_PORT != 0){
-			curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
-			curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
-		}
+		// if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0" 
+		// 	&& WxPayConfig::CURL_PROXY_PORT != 0){
+		// 	curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
+		// 	curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
+		// }
 		curl_setopt($ch,CURLOPT_URL, $url);
 		curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
 		curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);//严格校验

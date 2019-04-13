@@ -1,5 +1,5 @@
 <?php
-require_once "WxPay.Api.php";
+// require_once "WxPay.Api.php";
 /**
  * 
  * JSAPI支付实现类
@@ -63,7 +63,7 @@ class JsApiPay
 	 * 
 	 * @return json数据，可直接填入js函数作为参数
 	 */
-	public function GetJsApiParameters($UnifiedOrderResult)
+	public function GetJsApiParameters($UnifiedOrderResult,$data)
 	{
 
 	    if(!array_key_exists("appid", $UnifiedOrderResult)
@@ -79,7 +79,7 @@ class JsApiPay
 		$jsapi->SetNonceStr(WxPayApi::getNonceStr());
 		$jsapi->SetPackage("prepay_id=" . $UnifiedOrderResult['prepay_id']);
 		$jsapi->SetSignType("MD5");
-		$jsapi->SetPaySign($jsapi->MakeSign());
+		$jsapi->SetPaySign($jsapi->MakeSign($data['key']));
 		$parameters = json_encode($jsapi->GetValues());
 		return $parameters;
 	}

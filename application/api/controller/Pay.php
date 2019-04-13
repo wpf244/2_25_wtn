@@ -5,6 +5,7 @@ use think\Controller;
 use think\Loader;
 use think\Request;
 
+
 Loader::import('WxPay.WxPay', EXTEND_PATH, '.Api.php');
 Loader::import('WxPay.WxPay', EXTEND_PATH, '.JsApiPay.php');
 class Pay extends Controller
@@ -19,9 +20,13 @@ class Pay extends Controller
         \var_dump($results);exit;
         $openid=$results['openid'];
         return $openid;
+
+        
     }
     public function pays()
     {
+        $data=db("payment")->where("id",1)->find();
+       
         $did=\input('did');
         $uid=Request::instance()->header('uid');
         $user=db("user")->where("uid=$uid")->find();
@@ -46,10 +51,10 @@ class Pay extends Controller
         //     由小程序端传给服务端
         $input->SetOpenid($openid);
         //     向微信统一下单，并返回order，它是一个array数组
-        $order = \WxPayApi::unifiedOrder($input);
+        $order = \WxPayApi::unifiedOrder($input,$data);
         //     json化返回给小程序端
         $tools=new \JsApiPay();
-        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $jsApiParameters = $tools->GetJsApiParameters($order,$data);
         
 //         $arr=[
 //             'error_code'=>0,
@@ -104,6 +109,8 @@ class Pay extends Controller
     }
     public function pays_order()
     {
+        $data=db("payment")->where("id",1)->find();
+       
         $id=\input('did');
         $uid=Request::instance()->header('uid');
         $user=db("user")->where("uid=$uid")->find();
@@ -125,11 +132,11 @@ class Pay extends Controller
         //     由小程序端传给服务端
         $input->SetOpenid($openid);
         //     向微信统一下单，并返回order，它是一个array数组
-        $order = \WxPayApi::unifiedOrder($input);
+        $order = \WxPayApi::unifiedOrder($input,$data);
         //     json化返回给小程序端
         
         $tools=new \JsApiPay();
-        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $jsApiParameters = $tools->GetJsApiParameters($order,$data);
     
 //         $arr=[
 //             'error_code'=>0,
