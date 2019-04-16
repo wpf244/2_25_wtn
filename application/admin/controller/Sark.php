@@ -88,7 +88,8 @@ class Sark extends BaseAdmin
        }else{
            $urls=Request::instance()->domain();
 
-           $url=$urls.'/wtn?code='.$code;
+          // $url=$urls.'/wtn?code='.$code;
+          $url=$urls.'?code='.$code;
            $data['qrcode']= Code($url);
          
            $rea=db("sark")->insert($data);
@@ -143,7 +144,7 @@ class Sark extends BaseAdmin
                 $urls=Request::instance()->domain();
 
                // $url=$urls.'/wtn?code='.$code;
-               $url=$urls;
+                $url=$urls.'?code='.$code;
                 $data['qrcode']= Code($url);
                 $rea=db("sark")->where("id",$id)->update($data);
                 $res=db("sark_phone")->where("code",$code)->select();
