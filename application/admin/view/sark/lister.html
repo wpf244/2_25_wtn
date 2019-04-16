@@ -95,9 +95,9 @@
                   <th>ID</th>
                   <th>所属厂商</th>
                   <th>编号</th>
-                  <th>设备id</th>
-                 
+                  <th>设备id</th> 
                   <th>详细地址</th>
+                  <th>二维码图片</th>
                   <th>绑定手机号码</th>
                   <th>添加时间</th>
                 
@@ -115,6 +115,16 @@
                   <td>{$v.deviceId}</td>
                  
                   <td>{$v.addr}</td>
+                  <td class="ace-thumbnails hidden-480">
+                   {notempty name="$v.qrcode"}  
+                    <li><a href="{$v.qrcode}" data-rel="colorbox">
+                      <img width="80" height="80" alt="150x150" src="{$v.qrcode}"/>
+                      <div class="text">
+                        <div class="inner">点击放大</div>
+                      </div>
+                    </a></li>
+                    {/notempty}
+                  </td>
                   <td>
                     {$v.phone}
                   </td>

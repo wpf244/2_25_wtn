@@ -1,6 +1,8 @@
 <?php
 namespace app\admin\controller;
 
+use think\Request;
+
 class Sark extends BaseAdmin
 {
     public function addr()
@@ -84,6 +86,10 @@ class Sark extends BaseAdmin
        if($re){
            $this->error("此编号已存在",url('lister'));exit;
        }else{
+           $urls=Request::instance()->domain();
+
+           $url=$urls.'/wtn?code='.$code;
+           $data['qrcode']= Code($url);
          
            $rea=db("sark")->insert($data);
            $phone=input("phone");
@@ -134,6 +140,11 @@ class Sark extends BaseAdmin
             if($re){
                 $this->error("此编号已存在",url('lister'));exit;
             }else{
+                $urls=Request::instance()->domain();
+
+               // $url=$urls.'/wtn?code='.$code;
+               $url=$urls;
+                $data['qrcode']= Code($url);
                 $rea=db("sark")->where("id",$id)->update($data);
                 $res=db("sark_phone")->where("code",$code)->select();
                 if($res){
