@@ -130,11 +130,12 @@ class Express extends Common
     public function user_type()
     {
         $uid=Request::instance()->header("uid");
-        $user=db("user")->where("uid",$uid)->find();
-        if($user['code']){
-            $code=$user['code'];
-            $sark=db("sark")->where("code",$code)->find();
-            if($sark){
+        $code=input("code");
+        $user=db("user")->where(["uid"=>$uid])->find();
+        if($user){
+            $codes=$user['code'];
+           // $sark=db("sark")->where("code",$code)->find();
+            if($code == $codes){
                 $arr=[
                     'error_code'=>0,
                     'msg'=>"业主",
@@ -149,9 +150,9 @@ class Express extends Common
             }
         }else{
             $phone=$user['phone'];
-            $res=db("sark")->field("phone")->select();
-            foreach($res as $k => $v){
-                $phones=$v['phone'];
+            $res=db("sark")->field("phone")->where(["code"=>$code])->find();
+          
+                $phones=$res['phone'];
                 $arr=explode("@",$phones);
                 if(\in_array($phone,$arr)){
                     $arr=[
@@ -167,7 +168,7 @@ class Express extends Common
                         'data'=>''
                     ];
                 }
-            }
+            
         }
         echo json_encode($arr);
     } 
