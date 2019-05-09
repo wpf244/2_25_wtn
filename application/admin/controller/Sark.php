@@ -65,7 +65,24 @@ class Sark extends BaseAdmin
     }
     public function lister()
     {
-        $list=db("sark")->alias("a")->field("a.*,b.firm_name")->join("sark_firm b","a.fid=b.id","left")->order("id desc")->paginate(20);
+        $code=input('code');
+        $phone=input("phone");
+    
+        if($code || $phone){
+             if($code){
+                 $map['code']=array('like','%'.$code.'%');
+             }
+             if($phone){
+                $map['phone']=array('like','%'.$phone.'%');
+            }
+        }else{
+            $map=[];
+            $code='';
+            $phone='';
+        }
+        $this->assign(['code'=>$code,'phone'=>$phone]);
+
+        $list=db("sark")->alias("a")->where($map)->field("a.*,b.firm_name")->join("sark_firm b","a.fid=b.id","left")->order("id desc")->paginate(20);
         $this->assign("list",$list);
         $page=$list->render();
         $this->assign("page",$page);
@@ -81,6 +98,8 @@ class Sark extends BaseAdmin
     {
        $data=input("post.");
        $code=input("code");
+       $data['code']=trim(input('code'));
+       $data['deviceId']=trim(input('deviceId'));
        $data['time']=date("Y-m-d H:i:s");
        $re=db("sark")->where("code",$code)->find();
        if($re){
@@ -135,6 +154,8 @@ class Sark extends BaseAdmin
         $data=input("post.");
         $code=input("code");
         $id=input("id");
+        $data['code']=trim(input('code'));
+        $data['deviceId']=trim(input('deviceId'));
         $re=db("sark")->where("id",$id)->find();
         if($re){
             $re=db("sark")->where(["code"=>$code,"id"=>["neq",$id]])->find();
