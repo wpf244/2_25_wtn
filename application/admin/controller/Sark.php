@@ -116,6 +116,13 @@ class Sark extends BaseAdmin
            if($phone){
              $phones=\explode("@",$phone);
              foreach($phones as $v){
+
+                $user=db("user")->where("phone",$v)->find();
+
+                if($user){
+                    db("user")->where("uid",$user['uid'])->update(["code"=>$code]);
+                }
+
                  $datas['code']=$code;
                  $datas['phone']=$v;
                  db("sark_phone")->insert($datas);
@@ -176,6 +183,12 @@ class Sark extends BaseAdmin
                 if($phone){
                     $phones=\explode("@",$phone);
                     foreach($phones as $v){
+
+                        $user=db("user")->where("phone",$v)->find();
+
+                        if($user){
+                            db("user")->where("uid",$user['uid'])->update(["code"=>$code]);
+                        }
                         $datas['code']=$code;
                         $datas['phone']=$v;
                         db("sark_phone")->insert($datas);

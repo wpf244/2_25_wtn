@@ -6,7 +6,16 @@ class Member extends BaseAdmin
 {
     public function lister()
     {
-        $list=db("user")->order("uid desc")->paginate(10);
+        $map = [];
+        $nickname = trim(input('nickname'));
+        if($nickname)
+        {
+            $map['nickname'] = array('like','%'.$nickname.'%');
+        }
+        $this->assign("nickname",$nickname);  
+        $list=db("user")->where($map)
+        ->order("uid desc")
+        ->paginate(10);
         
         $res = [];
         foreach($list as $v){
