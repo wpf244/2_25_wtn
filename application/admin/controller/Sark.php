@@ -142,6 +142,15 @@ class Sark extends BaseAdmin
         $re=db("sark")->where("id",$id)->find();
         if($re){
             $del=db("sark")->where("id",$id)->delete();
+
+            $code=$re['code'];
+
+            $user=db("user")->where("code",$code)->find();
+
+            if($user){
+                $data['code']='';
+                db("user")->where("code",$code)->update($data);
+            }
         }
         $this->redirect("lister");
     }

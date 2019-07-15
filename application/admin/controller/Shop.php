@@ -4,8 +4,30 @@ namespace app\admin\controller;
 class Shop extends BaseAdmin
 {
     public function lister()
-    {
-        $list=db("shop")->where("apply",1)->order("id desc")->paginate(10);
+    {   
+        $map = [];
+        $name = trim(input('name'));
+        $phone = trim(input('phone'));
+
+        if($name)
+        {
+            $map['name'] = array('like','%'.$name.'%');
+        }
+
+        if($phone)
+        {
+            $mao['phone'] = array('like','%'.$phone.'%');
+        }
+
+        $this->assign([
+            'name' => $name,
+            'phone' => $phone
+        ]);
+
+        $list=db("shop")->where($map)
+        ->where("apply",1)
+        ->order("id desc")
+        ->paginate(10);
         $page=$list->render();
         $this->assign("list",$list);
         $this->assign("page",$page);

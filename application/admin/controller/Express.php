@@ -17,7 +17,7 @@ class Express extends BaseAdmin
     {
         $data=input('post.');  
         if(input('ex_status')){
-            $data['ex_status']=1;
+            $data['ex_status']=0;
         } 
         $data['ex_time']=date("Y-m-d H:i:s");
         $re=db("express")->insert($data);
